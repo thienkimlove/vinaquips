@@ -13,4 +13,4 @@
    <code>
      git clone git@github.com:thienkimlove/ckeditor.git && cd ckeditor && sh install.sh
    </code>
-   - browser to public/sample.html to see if working.
+   - browser to public/ckeditor/sample.html to see if working.

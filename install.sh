@@ -9,4 +9,4 @@ cp .env.stage .env
 
 echo "get javascript package for CKEditor and KCFinder"
 
-git clone git@github.com:thienkimlove/ckeditor.git && cd ckeditor && sh install.sh
+cd public && git clone git@github.com:thienkimlove/ckeditor.git && cd ckeditor && sh install.sh
