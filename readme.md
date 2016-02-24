@@ -9,4 +9,7 @@
 ###ckeditor and kcfinder
   Using for editor and upload image in editor.
   Install using bower :
-   - go to public directory type git clone git@github.com:thienkimlove/ckeditor.git && cd ckeditor && sh install.sh
+   - go to public directory type
+   <code>
+     git clone git@github.com:thienkimlove/ckeditor.git && cd ckeditor && sh install.sh
+   </code>
