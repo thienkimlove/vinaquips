@@ -7,6 +7,16 @@ echo "create .env file..."
 
 cp .env.stage .env
 
-echo "get javascript package for CKEditor and KCFinder"
+echo "chmod..."
 
-cd public && git clone git@github.com:thienkimlove/ckeditor.git && cd ckeditor && sh install.sh
+chmod -R 777 storage
+chmod -R 777 bootstrap
+
+echo "get javascript package for CKEditor and KCFinder..."
+
+mkdir upload
+chmod -R 777 upload
+cd public
+git clone git@github.com:thienkimlove/ckeditor.git
+cd ckeditor
+sh install.sh
