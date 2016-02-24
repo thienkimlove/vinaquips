@@ -20,3 +20,5 @@ mkdir upload
 git clone git@github.com:thienkimlove/ckeditor.git
 cd ckeditor
 sh install.sh
+cd ..
+cd ..

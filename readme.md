@@ -7,10 +7,10 @@
 
 ##Javascript Packages :
 ###ckeditor and kcfinder
-  Using for editor and upload image in editor.
-  Install using bower :
-   - go to public directory type
-   <code>
-     git clone git@github.com:thienkimlove/ckeditor.git && cd ckeditor && sh install.sh
-   </code>
-   - browser to public/ckeditor/sample.html to see if working.
+  Using for editor and upload image in editor to <code>public/upload</code>
+
+
+#install
+  <code>
+     git clone git@github.com:thienkimlove/vtv3.git && cd vtv3 && sh install.sh
+  </code>
