@@ -14,9 +14,9 @@ chmod -R 777 bootstrap
 
 echo "get javascript package for CKEditor and KCFinder..."
 
-mkdir upload
 chmod -R 777 upload
 cd public
+mkdir upload
 git clone git@github.com:thienkimlove/ckeditor.git
 cd ckeditor
 sh install.sh
