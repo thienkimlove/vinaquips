@@ -4,6 +4,7 @@
  - laracasts/flash : using for Flash message (https://github.com/laracasts/flash)
  - intervention/image && intervention/imagecache : using for Image (http://image.intervention.io/getting_started/installation#laravel)
  - cviebrock/eloquent-sluggable : using for slug URL (https://github.com/cviebrock/eloquent-sluggable)
+ - laravelcollective/html : using for HTML && Form (https://laravelcollective.com/docs/5.2/html)
 
 ##Javascript Packages :
 ###ckeditor and kcfinder

@@ -161,6 +161,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -211,6 +212,8 @@ return [
         //Custom Facade.
         'Flash'     => Laracasts\Flash\Flash::class,
         'Image'     => Intervention\Image\Facades\Image::class,
+        'Form'      => Collective\Html\FormFacade::class,
+        'Html'      => Collective\Html\HtmlFacade::class,
 
     ],
 
