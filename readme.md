@@ -15,3 +15,5 @@
   <code>
      git clone git@github.com:thienkimlove/vtv3.git && cd vtv3 && sh install.sh
   </code>
+  
+## Go to /admin to start  
