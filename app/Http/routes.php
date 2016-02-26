@@ -19,6 +19,11 @@ Route::get('example/composer', function(){
     return view('example.composer');
 });
 
+Route::get('example/paginator', function(){
+    $posts = \App\Post::paginate(1);
+    //$posts->setPath('custom/url');
+    return view('example.paginator', compact('posts'));
+});
 
 /*
 |--------------------------------------------------------------------------

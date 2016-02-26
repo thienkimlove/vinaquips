@@ -18,6 +18,53 @@
   
 ## Go to /admin to start  
 # Usually Case.
+
+## Validation Form
+- First we create `app/Http/PostRequest` by using artisan command `php artisan make:request PostRequest` and change as below :
+
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use App\Http\Requests\Request;
+
+class PostRequest extends Request
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'title' => 'required',
+            'description' => 'required',
+            'tag_list' => 'required'
+        ];
+    }
+}
+
+```
+- Now we can using `PostRequest` instead of `Request` in `store` and `update` function in `PostsController` :
+
+```php
+public function store(PostRequest $request)
+{
+  ...
+}
+```
 ## Sharing Data With All Views
 You may need to share a piece of data with all views that are rendered by your application.
 
@@ -314,6 +361,16 @@ class PostTag extends Model  {
 - `php artisan make:model Tag` and change as below :
 
 ```php
+class Tag extends Model implements  SluggableInterface {
+    use SluggableTrait;
+    
+        protected $sluggable = array(
+            'build_from' => 'name',
+            'save_to'    => 'slug',
+            'unique'          => true,
+            'on_update'       => true,
+        );
+        
     protected $fillable = ['name', 'slug'];
 
     /**
@@ -326,7 +383,28 @@ class PostTag extends Model  {
            ->latest('updated_at')
            ->paginate(10);
     }
+}    
 ```
+
+We also using `SluggableTrait` in `Tag` Model to implement Slug URL for Tag which specific in (https://github.com/cviebrock/eloquent-sluggable) :
+
+```php
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class Tag extends Model implements  SluggableInterface {
+
+    use SluggableTrait;
+
+    protected $sluggable = array(
+        'build_from' => 'name',
+        'save_to'    => 'slug',
+        'unique'          => true,
+        'on_update'       => true,
+    ); 
+```
+
 - Change in `PostsController` :
 
 ```php
@@ -392,5 +470,31 @@ class PostTag extends Model  {
             tags : true //allow to add new tag which not in list.
         });
     </script>
+@endsection
+```
+## Implement Pagination
+- Link https://laravel.com/docs/5.2/pagination
+- Using code below in `app/Http/routes.php` :
+
+```php
+Route::get('example/paginator', function(){
+    $posts = \App\Post::paginate(1);
+    //$posts->setPath('custom/url');
+    return view('example.paginator', compact('posts'));
+});
+```
+- View `resources/views/example/paginator` :
+```php
+@extends('layouts.app')
+@section('content')
+    <h1>
+        Example View Composer
+    </h1>
+    @foreach ($posts as $post)
+        <p>
+            {{$post->title}}
+        </p>
+    @endforeach
+    {!! $posts->links() !!}
 @endsection
 ```
