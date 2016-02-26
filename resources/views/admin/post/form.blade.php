@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('image', 'Ảnh đại diện cho bài viết') !!}
+                {!! Form::label('image', 'Image') !!}
                 @if ($post->image)
                     <img src="{{url('img/cache/120x120/' . $post->image)}}" />
                     <hr>
