@@ -97,7 +97,8 @@ Go to ```example/composer``` for testing example.
 
 ## Upload And Browser Images.
 We are using ```intervention/image``` and ```intervention/imagecache``` for working with images.
-1. First we add Html block below to ```resources/views/admin/posts/form.blade.php``` :
+
+- First we add Html block below to ```resources/views/admin/posts/form.blade.php``` :
 ```php
 <div class="form-group">
     {!! Form::label('image', 'Image') !!}
@@ -125,7 +126,7 @@ Please note that we using ```intervention/imagecache``` for image thumb url. To 
         },
     ),
 ```
-2. Create AdminController with ```php artisan make:controller AdminController``` as below :
+- Create AdminController with ```php artisan make:controller AdminController``` as below :
 
 ```php
 <?php
@@ -165,8 +166,8 @@ class AdminController extends Controller
     }
 }
 ```
-3. change ```PostsController``` to extend `AdminController`
-4. In `PostsController@store` , we change the code as below :
+- change ```PostsController``` to extend `AdminController`
+- In `PostsController@store` , we change the code as below :
 
 ```php
 public function store(PostRequest $request)
@@ -178,7 +179,7 @@ public function store(PostRequest $request)
     return redirect('admin/posts');
 }
 ```
-5. In `PostsController@update`, we change as below :
+- In `PostsController@update`, we change as below :
 
 ```php
 public function update($id, PostRequest $request)
@@ -193,7 +194,7 @@ public function update($id, PostRequest $request)
     return redirect('admin/posts');
 }
 ```
-6. In `PostsController@destroy` , we change code as below :
+- In `PostsController@destroy` , we change code as below :
 
 ```php
 $post = Post::find($id);          
@@ -203,8 +204,8 @@ if (file_exists(public_path('files/' . $post->image))) {
 $post->delete();
 ```
 ## Implement Post Tags
-1. Create Migration `php artisan make:migration create_tags_table`
-2. Edit the migration file as below :
+-  Create Migration `php artisan make:migration create_tags_table`
+- Edit the migration file as below :
 
 ```php
 <?php
@@ -251,7 +252,7 @@ class CreateTagsTable extends Migration {
 }
 
 ```
-3. Run the migration and add those functions below to `App\Post` :
+- Run the migration and add those functions below to `App\Post` :
 
 ```php
     /**
@@ -285,7 +286,7 @@ class CreateTagsTable extends Migration {
         return $this->tags->lists('name')->all();
     }
 ```
-4. Run `php artisan make:model PostTag` and change as below :
+- Run `php artisan make:model PostTag` and change as below :
 
 ```php
 <?php namespace App;
@@ -310,7 +311,7 @@ class PostTag extends Model  {
 
 }
 ```
-5. `php artisan make:model Tag` and change as below :
+- `php artisan make:model Tag` and change as below :
 
 ```php
     protected $fillable = ['name', 'slug'];
@@ -326,7 +327,7 @@ class PostTag extends Model  {
            ->paginate(10);
     }
 ```
-6. Change in `PostsController` :
+- Change in `PostsController` :
 
 ```php
     public $tags;
@@ -374,7 +375,7 @@ class PostTag extends Model  {
        
     
 ```
-7. in `resources/views/admin/posts/form.blade.php` add :
+- in `resources/views/admin/posts/form.blade.php` add :
 
 ```php
  <div class="form-group">
