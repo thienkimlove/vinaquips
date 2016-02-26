@@ -18,6 +18,7 @@
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Desc</th>
+                                <th>Image</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -27,6 +28,7 @@
                                     <td>{{$post->id}}</td>
                                     <td>{{$post->title}}</td>
                                     <td>{!! $post->description !!}</td>
+                                    <td><img src="{{url('img/cache/120x120/' . $post->image)}}" /></td>
                                     <td>
                                         <button id-attr="{{$post->id}}" class="btn btn-primary btn-sm edit-post" type="button">Edit</button>&nbsp;
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['admin.posts.destroy', $post->id]]) !!}

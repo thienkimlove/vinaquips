@@ -16,7 +16,7 @@ return array(
     |
     */
    
-    'route' => null,
+    'route' => 'img/cache',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,8 +31,7 @@ return array(
     */
     
     'paths' => array(
-        public_path('upload'),
-        public_path('images')
+        public_path('files')
     ),
 
     /*
@@ -55,6 +54,9 @@ return array(
         'small' => 'Intervention\Image\Templates\Small',
         'medium' => 'Intervention\Image\Templates\Medium',
         'large' => 'Intervention\Image\Templates\Large',
+        '120x120' => function($image) {
+            return $image->fit(120, 120);
+        },
     ),
 
     /*
@@ -62,7 +64,7 @@ return array(
     | Image Cache Lifetime
     |--------------------------------------------------------------------------
     |
-    | Lifetime in minutes of the images handled by the imagecache route.
+    | Lifetime in minutes of the images handled by the image cache route.
     |
     */
    

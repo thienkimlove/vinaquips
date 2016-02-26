@@ -32,6 +32,21 @@
                 {!! Form::textarea('description', null, ['class' => 'form-control ckeditor']) !!}
             </div>
 
+            <div class="form-group">
+                {!! Form::label('image', 'Ảnh đại diện cho bài viết') !!}
+                @if ($post->image)
+                    <img src="{{url('img/cache/120x120/' . $post->image)}}" />
+                    <hr>
+                @endif
+                {!! Form::file('image', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('tag_list', 'Từ khóa') !!}
+                {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+            </div>
+
+
 
             <div class="form-group">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary form-control']) !!}
@@ -44,3 +59,12 @@
         </div>
     </div>
 @stop
+
+@section('footer')
+    <script>
+        $('#tag_list').select2({
+            placeholder : 'choose or add new tag',
+            tags : true //allow to add new tag which not in list.
+        });
+    </script>
+@endsection

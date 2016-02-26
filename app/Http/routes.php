@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('example/composer', function(){
+    return view('example.composer');
+});
+
 
 /*
 |--------------------------------------------------------------------------
