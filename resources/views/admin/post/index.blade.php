@@ -9,6 +9,21 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="input-group custom-search-form">
+                        {!! Form::open(['method' => 'GET', 'route' =>  ['admin.posts.index'] ]) !!}
+                        <span class="input-group-btn">
+                            <input type="text" value="{{$searchPost}}" name="q" class="form-control" placeholder="Search post..">
+
+                            <button class="btn btn-default" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                        <input type="hidden" name="cat" value="{{$categoryId}}" />
+
+                        {!! Form::close() !!}
+                    </div>
+                </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -17,8 +32,10 @@
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
+                                <th>Category</th>
                                 <th>Desc</th>
                                 <th>Image</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -27,8 +44,10 @@
                                 <tr>
                                     <td>{{$post->id}}</td>
                                     <td>{{$post->title}}</td>
-                                    <td>{!! $post->description !!}</td>
+                                    <td>{{$post->category->name}}</td>
+                                    <td>{!! str_limit($post->desc, 200) !!}</td>
                                     <td><img src="{{url('img/cache/120x120/' . $post->image)}}" /></td>
+                                    <td>{{ ($post->status) ? 'Yes' : 'No'  }}</td>
                                     <td>
                                         <button id-attr="{{$post->id}}" class="btn btn-primary btn-sm edit-post" type="button">Edit</button>&nbsp;
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['admin.posts.destroy', $post->id]]) !!}

@@ -41,6 +41,20 @@
                     <!-- /.nav-second-level -->
                 </li>
 
+                <li>
+                    <a><i class="fa fa-files-o fa-fw"></i>Category<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+
+                        <li>
+                            <a href="{{url('admin/categories')}}">List</a>
+                        </li>
+                        <li>
+                            <a href="{{url('admin/categories/create')}}">Add</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+
 
             </ul>
         </div>

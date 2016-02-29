@@ -16,7 +16,7 @@ class CreateTagsTable extends Migration {
         {
             $table->increments('id');
             $table->string('name');
-            $table->string('slug', 32)->unique();
+            $table->string('slug', env('TAG_SLUG_URL_LENGTH'))->unique();
             $table->timestamps();
         });
         Schema::create('post_tag', function(Blueprint $tale)

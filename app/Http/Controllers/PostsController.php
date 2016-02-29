@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Tag;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use App\Post;
 
 class PostsController extends AdminController
 {
-    public $tags;
+    public $tags, $categories;
 
     /**
      * PostsController constructor.
@@ -20,6 +21,7 @@ class PostsController extends AdminController
     {
         parent::__construct();
         $this->tags = Tag::lists('name', 'name')->all();
+        $this->categories = array('' => 'Choose category') +  Category::lists('name', 'id')->all();
     }
 
 
@@ -32,22 +34,39 @@ class PostsController extends AdminController
         $post->tags()->sync($tagIds);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest('updated_at')->paginate(10);
-        return view('admin.post.index', compact('posts'));
+
+        $searchPost = '';
+        $categoryId = '';
+        $posts = Post::latest('updated_at');
+        if ($request->input('q')) {
+            $searchPost = urldecode($request->input('q'));
+            $posts = $posts->where('title', 'LIKE', '%'. $searchPost. '%');
+        }
+
+        if ($request->input('cat')) {
+            $categoryId = $request->input('cat');
+            $posts = $posts->where('category_id', '=', $categoryId);
+        }
+
+        $posts = $posts->paginate(env('ITEM_PER_PAGE'));
+
+        return view('admin.post.index', compact('posts', 'searchPost', 'categoryId'));
     }
 
     public function create()
     {
         $tags = $this->tags;
-        return view('admin.post.form', compact('tags'));
+        $categories = $this->categories;
+        return view('admin.post.form', compact('tags', 'categories'));
     }
 
     public function store(PostRequest $request)
     {
         $data = $request->all();
         $data['image'] =  ($request->file('image') && $request->file('image')->isValid()) ? $this->saveImage($request->file('image')) : '';
+        $data['status'] = ($request->input('status') == 'on') ? true : false;
         $post = Post::create($data);
         $this->syncTags($request, $post);
         flash('Create post success!', 'success');
@@ -57,8 +76,9 @@ class PostsController extends AdminController
     public function edit($id)
     {
         $post = Post::find($id);
+        $categories = $this->categories;
         $tags = $this->tags;
-        return view('admin.post.form', compact('tags', 'post'));
+        return view('admin.post.form', compact('tags', 'post', 'categories'));
     }
 
     public function update($id, PostRequest $request)
@@ -68,6 +88,7 @@ class PostsController extends AdminController
         if ($request->file('image') && $request->file('image')->isValid()) {
             $data['image'] = $this->saveImage($request->file('image'), $post->image);
         }
+        $data['status'] = ($request->input('status') == 'on') ? true : false;
         $post->update($data);
         $this->syncTags($request, $post);
         flash('Update post success!', 'success');

@@ -26,10 +26,20 @@
                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
             </div>
 
+            <div class="form-group">
+                {!! Form::label('category_id', 'Category') !!}
+                {!! Form::select('category_id', $categories, null, ['class' => 'form-control']) !!}
+            </div>
 
             <div class="form-group">
-                {!! Form::label('description', 'Description') !!}
-                {!! Form::textarea('description', null, ['class' => 'form-control ckeditor']) !!}
+                {!! Form::label('desc', 'Short Description') !!}
+                {!! Form::textarea('desc', null, ['class' => 'form-control']) !!}
+            </div>
+
+
+            <div class="form-group">
+                {!! Form::label('content', 'Content') !!}
+                {!! Form::textarea('content', null, ['class' => 'form-control ckeditor']) !!}
             </div>
 
             <div class="form-group">
@@ -44,6 +54,12 @@
             <div class="form-group">
                 {!! Form::label('tag_list', 'Tags') !!}
                 {!! Form::select('tag_list[]', $tags, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+            </div>
+
+
+            <div class="form-group">
+                {!! Form::label('status', 'Publish') !!}
+                {!! Form::checkbox('status', null, null) !!}
             </div>
 
 

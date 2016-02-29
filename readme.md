@@ -250,6 +250,48 @@ if (file_exists(public_path('files/' . $post->image))) {
 }
 $post->delete();
 ```
+
+## Implement Slug URL
+We will using `cviebrock/eloquent-sluggable` package to make `slug` field auto update when `store` or `update` content.
+
+For example, in table `posts`, we add a field `slug` in migration like below :
+
+```php
+$table->string('slug', env('POST_SLUG_URL_LENGTH'));
+```
+
+In `.env.stage` we already defined  `POST_SLUG_URL_LENGTH=200`.
+
+After that, edit the `protected $fillable` In `app/Post.php` to :
+
+```php
+ protected $fillable = [
+        ...
+        'slug',
+        ..
+    ];
+```
+
+Next, in `app/Post.php` change as below :
+
+```php
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model implements SluggableInterface
+{
+    use SluggableTrait;
+
+    protected $sluggable = array(
+        'build_from' => 'title',
+        'save_to'    => 'slug',
+        'unique'          => true,
+        'on_update'       => true,
+    );
+```
+Now the `slug` field will be slug-url of `title` field every post update or create.
+
 ## Implement Post Tags
 -  Create Migration `php artisan make:migration create_tags_table`
 - Edit the migration file as below :
@@ -386,7 +428,7 @@ class Tag extends Model implements  SluggableInterface {
 }    
 ```
 
-We also using `SluggableTrait` in `Tag` Model to implement Slug URL for Tag which specific in (https://github.com/cviebrock/eloquent-sluggable) :
+We also using `SluggableTrait` in `Tag` Model to implement Slug URL:
 
 ```php
 use Cviebrock\EloquentSluggable\SluggableInterface;
@@ -472,6 +514,160 @@ class Tag extends Model implements  SluggableInterface {
     </script>
 @endsection
 ```
+
+## Implement Categories
+First we create category migration in `database/migrations` :
+
+```php
+class CreateCategoriesTable extends Migration {
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('categories', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->string('name', 255);
+            $table->string('slug', env('CATEGORY_SLUG_URL_LENGTH'))->unique();
+            $table->integer('parent_id')->nullable()->index();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('categories');
+    }
+
+}
+``` 
+Please note that `env('CATEGORY_SLUG_URL_LENGTH')` refer to  `CATEGORY_SLUG_URL_LENGTH` in `.env` file.
+
+`Post` have a relationship with `Category` so we add in `Post` migration script :
+
+```php
+  $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
+```
+and in `app/Post.php` model :
+
+```php
+ /**
+     * post belong to one category.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+```
+
+Create the `Category` model with `php artisan make:model Category` and change to :
+
+```php
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model implements SluggableInterface
+{
+    use SluggableTrait;
+
+    protected $sluggable = array(
+        'build_from' => 'name',
+        'save_to'    => 'slug',
+        'unique'          => true,
+        'on_update'       => true,
+    );
+
+    protected $fillable = [
+        'name',
+        'parent_id',
+        'slug',
+    ];
+
+    /**
+     * parent of this category
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parent()
+    {
+        return $this->belongsTo('App\Category', 'parent_id', 'id');
+    }
+
+    /**
+     * sub of this category
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subCategories()
+    {
+        return $this->hasMany('App\Category', 'parent_id', 'id');
+
+    }
+
+    /**
+     * category have many posts.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany('App\Post')->where('status', true);
+    }
+}
+
+```
+
+Next we add a route in `app/Http/routes.php` :
+
+```php
+Route::group(['middleware' => 'web'], function () {
+    ...
+    Route::resource('admin/categories', 'CategoriesController');
+});
+```
+and make a controller with `php artisan make:controller CategoriesController`.
+
+Please note that we using `app/Http/Requests/CategoryRequest` to define validation rules when create or update category :
+
+```php
+class CategoryRequest extends Request
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'name' => 'required'
+        ];
+    }
+}
+```
+
 ## Implement Pagination
 - Link https://laravel.com/docs/5.2/pagination
 - Using code below in `app/Http/routes.php` :
@@ -498,3 +694,4 @@ Route::get('example/paginator', function(){
     {!! $posts->links() !!}
 @endsection
 ```
+## Implement Categories

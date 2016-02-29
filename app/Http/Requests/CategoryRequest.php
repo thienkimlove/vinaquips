@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PostRequest extends Request
+class CategoryRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class PostRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required',
-            'category_id' => 'required',
-            'desc' => 'required',
-            'content' => 'required',
-            'tag_list' => 'required'
+            'name' => 'required'
         ];
     }
 }
