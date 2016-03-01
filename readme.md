@@ -695,3 +695,47 @@ Route::get('example/paginator', function(){
 @endsection
 ```
 ## Implement Categories
+
+ See `databases/migrations` for Migration script.
+ See `app/Category.php` for Model.
+ See `app/Http/Controller/CategoriesController.php` for Controller.
+ 
+## Implement Settings
+
+```php
+php artisan make:migration create_table_settings --create=settings
+php artisan make:model Setting
+php artisan make:controller SettingsController
+php artisan make:request SettingRequest
+```
+In `routes.php` add `Route::resource('admin/settings', 'SettingsController');`
+
+Share `settings` with all views :
+
+```php
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        view()->share('site_settings', Setting::lists('value', 'name')->all());
+    }
+```
+
+Test with add code below in `resource/views/example/composer.blade.php` and `paginator.blade.php` :
+
+```html
+ @if ($site_settings)
+        @foreach ($site_settings as $key => $value)
+            Seting key : {{$key}} --- Setting value : {{$value}}
+        @endforeach
+    @endif
+```
+
+Browser `<host>/example/paginator` && `<host>/example/composer` to see.
+
+* Please note that when enter setting value is HTML code in form, click `Source` button in CKEditor to enter value, otherwise it will be encrypted.
