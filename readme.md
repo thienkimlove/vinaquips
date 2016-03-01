@@ -694,12 +694,7 @@ Route::get('example/paginator', function(){
     {!! $posts->links() !!}
 @endsection
 ```
-## Implement Categories
 
- See `databases/migrations` for Migration script.
- See `app/Category.php` for Model.
- See `app/Http/Controller/CategoriesController.php` for Controller.
- 
 ## Implement Settings
 
 ```php
