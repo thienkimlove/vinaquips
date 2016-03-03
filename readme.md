@@ -717,7 +717,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->share('site_settings', Setting::lists('value', 'name')->all());
+         //remove comment when finish install.
+        //view()->share('site_settings', Setting::lists('value', 'name')->all());
     }
 ```
 
@@ -734,3 +735,69 @@ Test with add code below in `resource/views/example/composer.blade.php` and `pag
 Browser `<host>/example/paginator` && `<host>/example/composer` to see.
 
 * Please note that when enter setting value is HTML code in form, click `Source` button in CKEditor to enter value, otherwise it will be encrypted.
+
+## Implement allow one user can login to admin.
+
+To implement that we create a new middleware `php artisan make:middleware AdminAuthenticate`
+
+and change to :
+
+```php
+public function handle($request, Closure $next, $guard = null)
+    {
+        if (Auth::guard($guard)->guest()) {
+          ...
+        } else {
+            $user = Auth::user();
+            if ($user->id != 1) {
+                return redirect('restricted');
+            }
+        }
+
+        return $next($request);
+    }
+```
+
+Only user with id = 1 can pass this middleware.
+
+after that we create a middleware name in `app/Http/Kenel.php` as below :
+
+```php
+protected $routeMiddleware = [
+       ...
+        'admin' => \App\Http\Middleware\AdminAuthenticate::class,
+       ...
+    ];
+```
+
+Change in `AdminController` constructor to check this middleware :
+
+```php
+class AdminController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+```
+
+Now create a route and a view to handle when user login but not with id = 1 :
+
+In `app/Http/routes.php`
+ 
+```php
+Route::get('restricted', function(){
+    return view('errors.restricted');
+});
+```
+
+In `resources/views/errors/restricted.blade.php` :
+
+```php
+<div class="content">
+    <div class="title">You are restricted to access to Admin Area.</div>
+</div>
+```

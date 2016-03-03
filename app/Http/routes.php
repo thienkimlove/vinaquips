@@ -25,6 +25,11 @@ Route::get('example/paginator', function(){
     return view('example.paginator', compact('posts'));
 });
 
+
+Route::get('restricted', function(){
+    return view('errors.restricted');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
