@@ -13,7 +13,7 @@
 
 #install
   ```
-     git clone git@github.com:thienkimlove/vtv3.git && cd vtv3 && sh install.sh
+     git clone git@github.com:thienkimlove/laravel-markdown.git && cd laravel-markdown && sh setup.sh
   ```
   
 ## Go to /admin to start  
