@@ -1,0 +1,21 @@
+{
+  "name": "google",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Quan Do <do.manh.quan@vsi-international.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/thienkimlove/vtv3",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ckeditor": "#standard/stable"
+  }
+}

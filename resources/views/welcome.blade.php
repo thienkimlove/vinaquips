@@ -39,6 +39,11 @@
 <div class="container">
     <div class="content">
         <div class="title">Laravel 5</div>
+        @if (isset($site_settings))
+            @foreach ($site_settings as $key => $value)
+                Seting key : {{$key}} --- Setting value : {{$value}}
+            @endforeach
+        @endif
     </div>
 </div>
 </body>

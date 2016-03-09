@@ -10,10 +10,4 @@
     </p>
     @endforeach
 
-    @if ($site_settings)
-     @foreach ($site_settings as $key => $value)
-        Seting key : {{$key}} --- Setting value : {{$value}}
-     @endforeach
-    @endif
-
 @endsection

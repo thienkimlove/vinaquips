@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //remove comment when finish install.
-        //view()->share('site_settings', Setting::lists('value', 'name')->all());
+        view()->share('site_settings', Setting::lists('value', 'name')->all());
     }
 
     /**
