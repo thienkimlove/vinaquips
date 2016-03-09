@@ -8,7 +8,7 @@
 
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             @if (!empty($category))
             <h2>Edit</h2>
             {!! Form::model($category, ['method' => 'PATCH', 'route' => ['admin.categories.update', $category->id]]) !!}

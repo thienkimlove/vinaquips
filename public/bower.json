@@ -1,13 +1,13 @@
 {
-  "name": "google",
-  "description": "",
-  "main": "",
+  "name": "public",
+  "homepage": "https://github.com/thienkimlove/laravel-markdown",
   "authors": [
     "Quan Do <do.manh.quan@vsi-international.com>"
   ],
-  "license": "MIT",
-  "homepage": "https://github.com/thienkimlove/vtv3",
+  "description": "",
+  "main": "",
   "moduleType": [],
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -16,6 +16,6 @@
     "tests"
   ],
   "dependencies": {
-    "ckeditor": "#standard/stable"
+    "ckeditor": "#standard/latest"
   }
 }
