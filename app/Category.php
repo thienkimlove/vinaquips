@@ -24,7 +24,9 @@ class Category extends Model implements SluggableInterface
         'vina_id',
         'image',
         'desc',
-        'keywords'
+        'keywords',
+        'type',
+        'sub_category_ids'
     ];
 
     /**

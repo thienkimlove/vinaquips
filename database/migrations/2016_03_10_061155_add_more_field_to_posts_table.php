@@ -28,6 +28,9 @@ class AddMoreFieldToPostsTable extends Migration
             $table->integer('views')->default(0);
             $table->string('weight_unit', 10)->default('g');
             $table->integer('vina_cat_id')->default(0);
+            $table->string('address', 100)->nullable();
+            $table->string('type', 20)->default('products');
+            $table->string('file')->nullable();
         });
     }
 
@@ -52,7 +55,10 @@ class AddMoreFieldToPostsTable extends Migration
                 'weight',
                 'views',
                 'weight_unit',
-                'vina_cat_id'
+                'vina_cat_id',
+                'address',
+                'type',
+                'file'
             ]);
         });
     }

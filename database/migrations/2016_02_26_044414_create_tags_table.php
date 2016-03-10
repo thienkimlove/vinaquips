@@ -17,6 +17,8 @@ class CreateTagsTable extends Migration {
             $table->increments('id');
             $table->string('name');
             $table->string('slug', env('TAG_SLUG_URL_LENGTH'))->unique();
+            $table->integer('vina_id')->default(0);
+            $table->string('type', 20)->default('products');
             $table->timestamps();
         });
         Schema::create('post_tag', function(Blueprint $tale)

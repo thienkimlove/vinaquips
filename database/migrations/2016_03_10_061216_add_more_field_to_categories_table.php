@@ -17,6 +17,8 @@ class AddMoreFieldToCategoriesTable extends Migration
             $table->string('image')->nullable();
             $table->text('desc')->nullable();
             $table->text('keywords')->nullable();
+            $table->string('type', 20)->default('products');
+            $table->string('sub_category_ids')->nullable();
         });
     }
 
@@ -32,7 +34,9 @@ class AddMoreFieldToCategoriesTable extends Migration
                 'vina_id',
                 'image',
                 'desc',
-                'keywords'
+                'keywords',
+                'type',
+                'sub_category_ids'
             ]);
         });
     }

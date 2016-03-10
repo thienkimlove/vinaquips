@@ -53,7 +53,7 @@
   "boxed": boxed layout mode e.g. <body class="boxed">
   "pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1">
 -->
-<body class="front no-trans">
+<body class="{{($page == 'index') ? 'front no-trans' : 'no-trans'}}">
 <!-- scrollToTop -->
 <!-- ================ -->
 <div class="scrollToTop"><i class="icon-up-open-big"></i></div>

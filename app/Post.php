@@ -34,7 +34,10 @@ class Post extends Model implements SluggableInterface
         'weight',
         'views',
         'weight_unit',
-        'vina_cat_id'
+        'vina_cat_id',
+        'address',
+        'type',
+        'file'
     ];
 
     public function user()
@@ -73,6 +76,12 @@ class Post extends Model implements SluggableInterface
         return $this->belongsToMany('App\Tag');
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
+
     /**
      * get the list tags of current post.
      * @return mixed
@@ -80,5 +89,15 @@ class Post extends Model implements SluggableInterface
     public function getTagListAttribute()
     {
         return $this->tags->lists('name')->all();
+    }
+
+    public function getGroupListAttribute()
+    {
+        return $this->groups->lists('name')->all();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }
