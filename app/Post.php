@@ -23,8 +23,24 @@ class Post extends Model implements SluggableInterface
         'desc',
         'content',
         'image',
-        'status'
+        'status',
+        'user_id',
+        'vina_id',
+        'code',
+        'price',
+        'number',
+        'currency',
+        'unit',
+        'weight',
+        'views',
+        'weight_unit',
+        'vina_cat_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * post belong to one category.

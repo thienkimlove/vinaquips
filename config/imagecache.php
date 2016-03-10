@@ -57,6 +57,14 @@ return array(
         '120x120' => function($image) {
             return $image->fit(120, 120);
         },
+
+        '500x500' => function($image) {
+            return $image->fit(500, 500);
+        },
+
+        '268x228' => function($image) {
+            return $image->fit(268, 228);
+        },
     ),
 
     /*

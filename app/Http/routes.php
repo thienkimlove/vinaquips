@@ -12,7 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $page = 'index';
+
+    $hotProducts = \App\Post::where('image', '<>', '')->latest()->limit(12)->get();
+
+    $newProducts = \App\Post::latest()->limit(3)->get();
+
+    return view('frontend.index', compact('hotProducts', 'newProducts', 'page'));
 });
 
 Route::get('example/composer', function(){

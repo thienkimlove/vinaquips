@@ -1,0 +1,45 @@
+a {
+  color: #e84c3d;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.viewDetail {
+  font-size: 16px;
+  font-weight: 300;
+  color: #e84c3d;
+}
+.btn {
+  &.btn-sm {
+    padding: 0;
+  }
+}
+.logo {
+  margin-bottom: 20px;
+}
+.elements-list > * {
+  margin-top: 0;
+  line-height: inherit;
+}
+.mega-menu {
+  &.dropdown {
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  }
+}
+.globalTitle {
+  position: relative;
+  .viewAll {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+  }
+  a {
+    color: #005A89;
+    &:hover {
+      color: #e84c3d;
+    }
+  }
+}

@@ -65,6 +65,19 @@ return [
             'engine'    => null,
         ],
 
+        'vina' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_VINA_HOST', 'localhost'),
+            'database'  => env('DB_VINA_DATABASE', 'forge'),
+            'username'  => env('DB_VINA_USERNAME', 'forge'),
+            'password'  => env('DB_VINA_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+            'engine'    => null,
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
