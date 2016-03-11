@@ -39,7 +39,7 @@ class GrabDatabase extends Command
         parent::__construct();
     }
 
-    protected function saveVinaImage($path)
+    protected function saveVinaImage($path, $id = null)
     {
        if (!file_exists($path)) {
            return '';
@@ -56,7 +56,8 @@ class GrabDatabase extends Command
            else
                $extension = '.jpg';
 
-           $filename = md5(time()) . $extension;
+           $random = ($id)?  $id.'_'.md5(time()) : md5(time());
+           $filename = $random . $extension;
 
            $image->save(public_path('files/' . $filename));
 
@@ -103,8 +104,9 @@ class GrabDatabase extends Command
                 ]);
 
                 if (!$created->image && $path) {
-                    $created->image = $this->saveVinaImage($path);
-                    $created->save();
+                    $created->update([
+                        'image' => $this->saveVinaImage($path, $created->id. '_'. $post->id)
+                    ]);
                 }
 
                 //get reviews.
@@ -146,7 +148,7 @@ class GrabDatabase extends Command
         ]);
 
         if (!$created->image && $path) {
-            $created->image = $this->saveVinaImage($path);
+            $created->image = $this->saveVinaImage($path, $created->id.'_'.$category->catid);
             $created->save();
         }
 
@@ -210,7 +212,7 @@ class GrabDatabase extends Command
                 ]);
 
                 if (!$created->image && $path) {
-                    $created->image = $this->saveVinaImage($path);
+                    $created->image = $this->saveVinaImage($path, $created->id.'_'. $group->groupid);
                     $created->save();
                 }
 
@@ -274,10 +276,10 @@ class GrabDatabase extends Command
      */
     public function handle()
     {
-        $this->syncVina('products');
-        $this->syncVina('shopping');
-        $this->syncVina('accessories');
-        $this->saveGroups();
-        $this->saveTags();
+       $this->syncVina('products');
+       $this->syncVina('shopping');
+       $this->syncVina('accessories');
+       // $this->saveGroups();
+       // $this->saveTags();
     }
 }
