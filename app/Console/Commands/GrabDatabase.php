@@ -274,10 +274,10 @@ class GrabDatabase extends Command
      */
     public function handle()
     {
-       // $this->syncVina('products');
-       // $this->syncVina('shopping');
-       // $this->syncVina('accessories');
-       // $this->saveGroups();
+        $this->syncVina('products');
+        $this->syncVina('shopping');
+        $this->syncVina('accessories');
+        $this->saveGroups();
         $this->saveTags();
     }
 }
