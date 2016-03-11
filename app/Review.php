@@ -17,6 +17,8 @@ class Review extends Model
         'post_id'
     ];
 
+    public $dates = ['updated_at'];
+
     public function post()
     {
         return $this->belongsTo(Post::class);

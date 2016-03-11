@@ -18,7 +18,7 @@ class Tag extends Model implements  SluggableInterface {
     );
 
 
-    protected $fillable = ['name', 'slug', 'vina_id', 'type'];
+    protected $fillable = ['name', 'slug', 'vina_id', 'type', 'desc'];
 
 
 
@@ -28,9 +28,6 @@ class Tag extends Model implements  SluggableInterface {
      */
     public function posts()
     {
-        return $this->belongsToMany('App\Post')
-           // ->where('status', true)
-            ->latest('updated_at')
-            ->paginate(10);
+        return $this->belongsToMany('App\Post');
     }
 }

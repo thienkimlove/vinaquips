@@ -4,6 +4,7 @@
 _ide_helper.php
 /public/upload
 /public/files/*
+!/public/files/default.jpg
 /public/bower_components
 /public/kcfinder
 /backup

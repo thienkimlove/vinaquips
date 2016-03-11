@@ -37,7 +37,12 @@ class Post extends Model implements SluggableInterface
         'vina_cat_id',
         'address',
         'type',
-        'file'
+        'file',
+        'image_1',
+        'image_2',
+        'image_3',
+        'video',
+        'video_desc'
     ];
 
     public function user()
@@ -89,6 +94,11 @@ class Post extends Model implements SluggableInterface
     public function getTagListAttribute()
     {
         return $this->tags->lists('name')->all();
+    }
+
+    public function getTitleShowAttribute()
+    {
+        return html_entity_decode($this->title);
     }
 
     public function getGroupListAttribute()

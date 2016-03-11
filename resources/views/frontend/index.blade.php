@@ -1,55 +1,9 @@
 @extends('frontend')
 
 @section('content')
-<!-- banner start -->
-<!-- ================ -->
-<div class="banner">
 
-    <!-- slideshow start -->
-    <!-- ================ -->
-    <div class="slideshow white-bg">
-        <!-- slider revolution start -->
-        <!-- ================ -->
-        <div class="slider-banner-container">
-            <div class="slider-banner-3">
-                <ul>
-                    <!-- slide 1 start -->
-                    <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-saveperformance="on" data-title="Slide 1">
+@include('frontend.banner')
 
-                        <!-- main image -->
-                        <img src="{{url('frontend/images/vinaquips/sliders/banner-1.gif')}}" alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                        <!-- Translucent background -->
-                    </li>
-                    <!-- slide 1 end -->
-
-                    <!-- slide 2 start -->
-                    <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-saveperformance="on" data-title="Slide 2">
-
-                        <!-- main image -->
-                        <img src="{{url('frontend/images/vinaquips/sliders/banner-2.gif')}}"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                        <!-- Translucent background -->
-                        <div class="tp-caption dark-translucent-bg" data-x="center" data-y="bottom" data-speed="800" data-start="0"></div>
-                    </li>
-                    <!-- slide 2 end -->
-                    <!-- slide 3 start -->
-                    <li data-transition="fade" data-slotamount="7" data-masterspeed="1000" data-saveperformance="on" data-title="Slide 2">
-
-                        <!-- main image -->
-                        <img src="{{url('frontend/images/vinaquips/sliders/banner-3.gif')}}"  alt="slidebg1" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-                        <!-- Translucent background -->
-                        <div class="tp-caption dark-translucent-bg" data-x="center" data-y="bottom" data-speed="800" data-start="0"></div>
-                    </li>
-                    <!-- slide 3 end -->
-                </ul>
-            </div>
-        </div>
-        <!-- slider revolution end -->
-    </div>
-    <!-- slideshow end -->
-</div>
-<!-- banner end -->
-<!-- page-top start-->
-<!-- ================ -->
 <div class="page-top object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
     <div class="container">
         <div class="row">
@@ -61,7 +15,7 @@
                     <p class="text-center">{{html_entity_decode($product->title)}}</p>
                     <div class="row grid-space-20">
                         <div class="col-sm-12 col-md-4 col-md-push-4">
-                            <img src="{{url('img/cache/500x500/'. $product->image)}}"
+                            <img src="{{\App\Custom\Custom::imageUrl('img/cache/500x500/'. $product->image)}}"
                                  alt="{{html_entity_decode($product->title)}}" class="object-non-visible"
                                  data-animation-effect="fadeInUp"
                                  data-effect-delay="0">
@@ -164,7 +118,7 @@
                     @foreach ($products as $product)
                     <div class="list-with-image">
                         <div class="overlay-container">
-                            <img src="{{url('img/cache/268x228/'.$product->image)}}" alt="{{$product->title}}">
+                            <img src="{{ \App\Custom\Custom::imageUrl('img/cache/268x228/'.$product->image)}}" alt="{{$product->title}}">
                             <a href="{{url($product->slug.'.html')}}" class="overlay small">
                                 <i class="fa fa-link"></i>
                             </a>
@@ -182,42 +136,6 @@
 <!-- section end -->
 <!-- section start -->
 <!-- ================ -->
-<div class="section white-bg text-muted footer-top clearfix">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="owl-carousel clients" id="slidePartner">
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/buchi_logo.png')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/memmert_atmologo_kombi.png')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/client10.jpg')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/hysc_logo_eng2_2.jpg')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/jascologo.png')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/labconco-logo.png')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/logo_top_daihan.png')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/samheung.jpg')}}" alt=""></a>
-                    </div>
-                    <div class="client">
-                        <a href="#"><img src="{{url('frontend/images/vinaquips/partners/testimoniallogo_horiba.gif')}}" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- section end -->
 @endsection

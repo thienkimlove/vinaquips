@@ -160,7 +160,7 @@ fixed: fixed navigation mode (sticky menu) e.g. <header class="header fixed clea
                                                             @if ($header_products['products'])
                                                                 <h4>{{$header_products['products']->title}}</h4>
                                                                 <p>{!! str_limit($header_products['products']->desc, env('TRIM_DESC')) !!}</p>
-                                                                <img src="{{url('img/cache/500x500/'.$header_products['products']->image)}}" alt="Vinaquips">
+                                                                <img src="{{\App\Custom\Custom::imageUrl('img/cache/500x500/'.$header_products['products']->image)}}" alt="Vinaquips">
                                                             @endif
                                                         </div>
                                                         <div class="col-sm-8 col-md-6">
@@ -196,7 +196,7 @@ fixed: fixed navigation mode (sticky menu) e.g. <header class="header fixed clea
                                                             @if ($header_products['shopping'])
                                                                 <h4>{{$header_products['shopping']->title}}</h4>
                                                                 <p>{!! str_limit($header_products['shopping']->desc, env('TRIM_DESC')) !!}</p>
-                                                                <img src="{{url('img/cache/500x500/'.$header_products['shopping']->image)}}" alt="Vinaquips">
+                                                                <img src="{{\App\Custom\Custom::imageUrl('img/cache/500x500/'.$header_products['shopping']->image)}}" alt="Vinaquips">
                                                             @endif
                                                         </div>
                                                         <div class="col-sm-8 col-md-6">
@@ -233,7 +233,7 @@ fixed: fixed navigation mode (sticky menu) e.g. <header class="header fixed clea
                                                             @if ($header_products['accessories'])
                                                                 <h4>{{$header_products['accessories']->title}}</h4>
                                                                 <p>{!! str_limit($header_products['accessories']->desc, env('TRIM_DESC')) !!}</p>
-                                                                <img src="{{url('img/cache/500x500/'.$header_products['accessories']->image)}}" alt="Vinaquips">
+                                                                <img src="{{\App\Custom\Custom::imageUrl('img/cache/500x500/'.$header_products['accessories']->image)}}" alt="Vinaquips">
                                                             @endif
                                                         </div>
                                                         <div class="col-sm-8 col-md-6">

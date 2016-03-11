@@ -45,7 +45,7 @@ class ViewComposerProvider extends ServiceProvider
 
             $temp = Post::whereHas('category', function($q){
                 $q->where('parent_id', env('PRODUCTS_CAT_ID'));
-            })->where('image', '<>', '')->limit(1)->get();
+            })->limit(1)->get();
 
             if ($temp->count() > 0) {
                 $posts['products'] = $temp->first();
@@ -55,7 +55,7 @@ class ViewComposerProvider extends ServiceProvider
 
             $temp = Post::whereHas('category', function($q){
                 $q->where('parent_id', env('SHOPPING_CAT_ID'));
-            })->where('image', '<>', '')->limit(1)->get();
+            })->limit(1)->get();
 
             if ($temp->count() > 0) {
                 $posts['shopping'] = $temp->first();
@@ -65,7 +65,7 @@ class ViewComposerProvider extends ServiceProvider
 
             $temp = Post::whereHas('category', function($q){
                 $q->where('parent_id', env('ACCESSORIES_CAT_ID'));
-            })->where('image', '<>', '')->limit(1)->get();
+            })->limit(1)->get();
 
             if ($temp->count() > 0) {
                 $posts['accessories'] = $temp->first();

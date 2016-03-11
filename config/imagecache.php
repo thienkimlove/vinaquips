@@ -69,6 +69,10 @@ return array(
         '750x563' => function($image) {
             return $image->fit(750, 563);
         },
+
+        '341x300' => function($image) {
+            return $image->fit(341, 300);
+        },
     ),
 
     /*

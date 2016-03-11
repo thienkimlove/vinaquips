@@ -54,6 +54,6 @@ class Category extends Model implements SluggableInterface
      */
     public function posts()
     {
-        return $this->hasMany('App\Post')->where('status', true);
+        return $this->hasMany('App\Post');
     }
 }

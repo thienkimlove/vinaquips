@@ -221,6 +221,7 @@ class GrabDatabase extends Command
                 foreach ($groupPosts as $groupPost) {
                    $post = Post::where('vina_id', $groupPost->pro_id)->where('type', $type)->get();
                    if ($post->count() > 0) {
+                       $post->first()->groups()->detach($created->id);
                        $post->first()->groups()->attach($created->id);
                    }
                 }
@@ -243,7 +244,8 @@ class GrabDatabase extends Command
                     ], [
                         'name' => $tag->keywords,
                         'type' => $type,
-                        'vina_id' => $tag->tid
+                        'vina_id' => $tag->tid,
+                        'desc' => $tag->description
                     ]);
 
                     //sync with posts
@@ -253,6 +255,7 @@ class GrabDatabase extends Command
                     foreach ($tagPosts as $tagPost) {
                         $post = Post::where('vina_id', $tagPost->id)->where('type', $type)->get();
                         if ($post->count() > 0) {
+                            $post->first()->tags()->detach($created->id);
                             $post->first()->tags()->attach($created->id);
                         }
                     }
@@ -271,10 +274,10 @@ class GrabDatabase extends Command
      */
     public function handle()
     {
-        //$this->syncVina('products');
+       // $this->syncVina('products');
        // $this->syncVina('shopping');
        // $this->syncVina('accessories');
-        $this->saveGroups();
+       // $this->saveGroups();
         $this->saveTags();
     }
 }
