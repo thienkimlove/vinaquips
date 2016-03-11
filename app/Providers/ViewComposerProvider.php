@@ -43,7 +43,7 @@ class ViewComposerProvider extends ServiceProvider
 
             $posts = [];
 
-            $temp = Post::whereHas('category', function($q){
+            $temp = Post::image()->whereHas('category', function($q){
                 $q->where('parent_id', env('PRODUCTS_CAT_ID'));
             })->limit(1)->get();
 
@@ -53,7 +53,7 @@ class ViewComposerProvider extends ServiceProvider
                 $posts['products'] = null;
             }
 
-            $temp = Post::whereHas('category', function($q){
+            $temp = Post::image()->whereHas('category', function($q){
                 $q->where('parent_id', env('SHOPPING_CAT_ID'));
             })->limit(1)->get();
 
@@ -63,7 +63,7 @@ class ViewComposerProvider extends ServiceProvider
                 $posts['shopping'] = null;
             }
 
-            $temp = Post::whereHas('category', function($q){
+            $temp = Post::image()->whereHas('category', function($q){
                 $q->where('parent_id', env('ACCESSORIES_CAT_ID'));
             })->limit(1)->get();
 

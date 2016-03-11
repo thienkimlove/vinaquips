@@ -110,4 +110,9 @@ class Post extends Model implements SluggableInterface
     {
         return $this->hasMany(Review::class);
     }
+
+    public function scopeImage($query)
+    {
+        $query->where('status', true)->whereNotNull('image')->where('image', '<>', '' );
+    }
 }

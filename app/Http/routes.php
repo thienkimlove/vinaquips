@@ -15,8 +15,8 @@ Route::get('/', function () {
 
     $page = 'index';
 
-    $hotProducts = \App\Post::latest()->limit(12)->get();
-    $newProducts = \App\Post::latest()->limit(3)->get();
+    $hotProducts = \App\Post::image()->latest()->limit(12)->get();
+    $newProducts = \App\Post::image()->latest()->limit(3)->get();
 
     return view('frontend.index', compact('hotProducts', 'newProducts', 'page'))->with([
         'meta_title' => 'Vinaquips | Trang chủ',
@@ -68,7 +68,7 @@ Route::get('tag/{value}', function($value) {
 
     $tag = \App\Tag::where('slug', $value)->first();
 
-    $posts = $tag->posts()->where('status', true)->paginate(9);
+    $posts = $tag->posts()->image()->paginate(9);
 
     $tag->desc = ($tag->desc) ? $tag->desc : 'Thông tin theo từ khóa '.$tag->name. ' của sản phẩm';
 
@@ -92,12 +92,12 @@ Route::get('{value}', function ($value) {
 
         $post = \App\Post::where('slug', $matches[1])->first();
 
-        $viewedProducts = \App\Post::latest()
+        $viewedProducts = \App\Post::image()->latest()
             ->where('id', '<>', $post->id)
             ->limit(4)
             ->get();
 
-        $relatedPosts = \App\Post::where('category_id', $post->category_id)
+        $relatedPosts = \App\Post::image()->where('category_id', $post->category_id)
             ->where('id', '<>', $post->id)
             ->limit(4)
             ->get();
@@ -126,8 +126,7 @@ Route::get('{value}', function ($value) {
     } else {
         $page = 'category';
         $category = \App\Category::where('slug', $value)->first();
-        $posts = \App\Post::where('status', true)
-            ->where('category_id', $category->id)
+        $posts = \App\Post::image()->where('category_id', $category->id)
             ->paginate(9);
 
         return view('frontend.category', compact(
