@@ -273,19 +273,20 @@
                         @endforeach
                     </div>
                     <!-- download -->
+                    @if ($post->files->count() > 0 && $post->files->first()->path)
                     <div class="block clearfix">
                         <h3 class="title">Catalog sản phẩm</h3>
                         <div class="separator"></div>
                         <div class="image-box">
                             <div class="overlay-container">
-                                <img src="{{\App\Custom\Custom::imageUrl('img/cache/341x300/'.$post->category->image)}}" alt="{{$post->category->name}}">
+                                <img src="{{\App\Custom\Custom::imageUrl('img/cache/341x300/'.$post->image)}}" alt="{{$post->files->first()->title}}">
                                 <div class="overlay">
                                     <div class="overlay-links">
-                                        <a href="{{url($post->category->slug)}}">
+                                        <a href="{{url($post->slug. '.html')}}">
                                             <i class="fa fa-link"></i>
                                         </a>
-                                        <a href="{{\App\Custom\Custom::imageUrl('img/cache/341x300/'.$post->category->image)}}"
-                                           alt="{{$post->category->name}}"
+                                        <a href="{{\App\Custom\Custom::imageUrl('img/cache/341x300/'.$post->image)}}"
+                                           alt="{{$post->files->first()->title}}"
                                            class="popup-img-single"
                                            title="image title">
                                             <i class="fa fa-search-plus"></i>
@@ -294,12 +295,13 @@
                                 </div>
                             </div>
                             <div class="image-box-body">
-                                <h3 class="title"><a href="{{url($post->category->slug)}}">{{$post->category->name}}</a></h3>
-                                <p>{{$post->category->desc}}</p>
-                                <a href="{{url($post->category->slug)}}" class="link"><span><i class="fa fa-download pr-10"></i>Download</span></a>
+                                <h3 class="title"><a href="{{url('files/'.$post->files->first()->path)}}">{{$post->files->first()->title}}</a></h3>
+                                <p>{{$post->files->first()->desc}}</p>
+                                <a href="{{url('files/'.$post->files->first()->path)}}" class="link"><span><i class="fa fa-download pr-10"></i>Download</span></a>
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </aside>
             <!-- main end -->

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Category;
+use App\File;
 use App\Group;
 use App\Post;
 use App\Review;
@@ -231,6 +232,60 @@ class GrabDatabase extends Command
         }
     }
 
+    protected function saveFiles()
+    {
+        foreach (['products', 'shopping', 'accessories'] as $type) {
+            $table = 'nv4_'.$type.'_files';
+            $file_post_table = 'nv4_'.$type.'_files_rows';
+            $files = DB::connection('vina')->select("select * from $table ");
+            foreach ($files as $file) {
+
+                $realPath = '';
+
+                if (file_exists(public_path('public_html/uploads/'.$type.'/'. $file->path))) {
+                    $realPath = public_path('public_html/uploads/'.$type.'/'. $file->path);
+                } else if (file_exists(public_path('public_html/uploads/'.$type.'/files/'. $file->path))) {
+                    $realPath = public_path('public_html/uploads/'.$type.'/files/'. $file->path);
+                }
+
+                $created = File::updateOrCreate([
+                    'vina_id' => $file->id,
+                    'type' => $type
+                ], [
+                    'title' => $file->vi_title,
+                    'desc' => $file->vi_description,
+                    'type' => $type,
+                    'vina_id' => $file->id,
+                    'status' => true,
+                    'filesize' => $file->filesize,
+                    'extension' => $file->extension
+                ]);
+
+
+
+                if (!$created->path && $realPath) {
+                    $filename = $created->id.'_'. $file->id .'_'.md5(time()).'.'. $created->extension;
+                    if (@copy($realPath, public_path('files/'.$filename))) {
+                        $created->path = $filename;
+                        $created->save();
+                    }
+                }
+
+                //sync with posts
+
+                $filePosts = DB::connection('vina')
+                    ->select("select * from $file_post_table where id_files = ".$file->id);
+                foreach ($filePosts as $filePost) {
+                    $post = Post::where('vina_id', $filePost->id_rows)->where('type', $type)->get();
+                    if ($post->count() > 0) {
+                        $post->first()->files()->detach($created->id);
+                        $post->first()->files()->attach($created->id);
+                    }
+                }
+            }
+        }
+    }
+
     protected function saveTags()
     {
         foreach (['products', 'shopping', 'accessories'] as $type) {
@@ -279,7 +334,8 @@ class GrabDatabase extends Command
        $this->syncVina('products');
        $this->syncVina('shopping');
        $this->syncVina('accessories');
-       // $this->saveGroups();
-       // $this->saveTags();
+       $this->saveGroups();
+       $this->saveTags();
+       $this->saveFiles();
     }
 }

@@ -76,7 +76,7 @@ Route::get('tag/{value}', function($value) {
 
     $tag->keywords = 'cân, máy ph, khuấy từ, bếp đun, cất quay, chân không, sắc ký, nghiền mẫu, sắc ký lỏng, hóa, thí nghiệm, y tế, máy khuấy từ, lắc, tủ ấm memmert, sấy, ấm lạnh, âm sâu, lưu mẫu, chân không, co2, so màu, sắc ký, khí, lỏng, khuấy, gia nhiệt, sinh học,  sinh hoá, hấp thụ, quang phổ, ftir, kính hiển vi, cô quay, đồng hoá, xử lý mẫu';
 
-    return view('frontend.category', compact(
+    return view('frontend.tag', compact(
         'category', 'page', 'posts'
     ))->with([
         'meta_title' => $tag->name,
@@ -85,29 +85,50 @@ Route::get('tag/{value}', function($value) {
     ]);
 });
 
-Route::get('{value}', function ($value) {
+Route::get('{value}', function ($value, Illuminate\Http\Request $request) {
+
     if (preg_match('/([a-z0-9\-]+)\.html/', $value, $matches)) {
 
         $page = 'detail';
 
         $post = \App\Post::where('slug', $matches[1])->first();
 
-        $viewedProducts = \App\Post::image()->latest()
-            ->where('id', '<>', $post->id)
-            ->limit(4)
-            ->get();
-
         $relatedPosts = \App\Post::image()->where('category_id', $post->category_id)
             ->where('id', '<>', $post->id)
             ->limit(4)
             ->get();
 
-        return view('frontend.detail', compact('post', 'page', 'viewedProducts', 'relatedPosts'))->with([
+        $recentIds = json_decode( $request->cookie('recent') );
+
+        if (!$recentIds) {
+            $recentIds = [];
+        }
+        array_push($recentIds, $post->id);
+        if (count($recentIds) > 4) {
+            array_pop($recentIds);
+        }
+
+        $viewedProducts = \App\Post::image()->latest()
+            ->whereIn('id', $recentIds)
+            ->where('id', '<>', $post->id)
+            ->limit(4)
+            ->get();
+
+        $response = new \Illuminate\Http\Response(view('frontend.detail', compact('post', 'page', 'viewedProducts', 'relatedPosts'))->with([
             'meta_title' => str_limit($post->title, 50),
             'meta_desc' => str_limit($post->desc, 150),
             'meta_keywords' => implode(',', $post->tag_list)
-        ]);
-    } else if (in_array($value, ['lien-he', 'gioi-thieu', 'san-pham', 'mua-hang', 'phu-kien'])) {
+        ])->with([
+            'meta_title' => str_limit($post->title, 50),
+            'meta_desc' => str_limit($post->desc, 150),
+            'meta_keywords' => implode(',', $post->tag_list)
+        ]));
+
+        $response->withCookie(cookie('recent', json_encode($recentIds), 60));
+
+        return $response;
+
+    } else if (in_array($value, ['lien-he', 'gioi-thieu'])) {
         $page = $value;
 
         $list =  [
@@ -125,12 +146,11 @@ Route::get('{value}', function ($value) {
         ]);
     } else {
         $page = 'category';
+
         $category = \App\Category::where('slug', $value)->first();
-        $posts = \App\Post::image()->where('category_id', $category->id)
-            ->paginate(9);
 
         return view('frontend.category', compact(
-            'category', 'page', 'posts'
+            'category', 'page'
         ))->with([
             'meta_title' => $category->name,
             'meta_desc' => $category->desc,

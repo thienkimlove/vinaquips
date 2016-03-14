@@ -86,6 +86,11 @@ class Post extends Model implements SluggableInterface
         return $this->belongsToMany(Group::class);
     }
 
+    public function files()
+    {
+        return $this->belongsToMany(File::class);
+    }
+
 
     /**
      * get the list tags of current post.
