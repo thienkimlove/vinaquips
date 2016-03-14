@@ -72,12 +72,12 @@ Route::get('tag/{value}', function($value) {
 
     $tag->desc = ($tag->desc) ? $tag->desc : 'Thông tin theo từ khóa '.$tag->name. ' của sản phẩm';
 
-    $category = $tag;
+
 
     $tag->keywords = 'cân, máy ph, khuấy từ, bếp đun, cất quay, chân không, sắc ký, nghiền mẫu, sắc ký lỏng, hóa, thí nghiệm, y tế, máy khuấy từ, lắc, tủ ấm memmert, sấy, ấm lạnh, âm sâu, lưu mẫu, chân không, co2, so màu, sắc ký, khí, lỏng, khuấy, gia nhiệt, sinh học,  sinh hoá, hấp thụ, quang phổ, ftir, kính hiển vi, cô quay, đồng hoá, xử lý mẫu';
 
     return view('frontend.tag', compact(
-        'category', 'page', 'posts'
+        'tag', 'page', 'posts'
     ))->with([
         'meta_title' => $tag->name,
         'meta_desc' => $tag->desc,

@@ -263,11 +263,11 @@
                         <div class="list-with-image">
                             <div class="overlay-container">
                                 <img src="{{\App\Custom\Custom::imageUrl('img/cache/500x500/'.$product->image)}}" alt="{{$product->title}}">
-                                <a href="{{url($product->slug)}}" class="overlay small">
+                                <a href="{{url($product->slug.'.html')}}" class="overlay small">
                                     <i class="fa fa-link"></i>
                                 </a>
                             </div>
-                            <h2><a href="{{url($product->slug)}}">{{$product->title}}</a></h2>
+                            <h2><a href="{{url($product->slug.'.html')}}">{{$product->title}}</a></h2>
                             <p class="small">{!! str_limit($product->desc, env('TRIM_DESC')) !!}</p>
                         </div>
                         @endforeach
