@@ -1,25 +1,27 @@
-#Adding Packages
-## List packages adding more to basic laravel 5.2
+## General
+
+### Adding Packages
+ List packages adding more to basic laravel 5.2
  - barryvdh/laravel-ide-helper : using for generate helper for IDE coding (https://github.com/barryvdh/laravel-ide-helper)
  - laracasts/flash : using for Flash message (https://github.com/laracasts/flash)
  - intervention/image && intervention/imagecache : using for Image (http://image.intervention.io/getting_started/installation#laravel)
  - cviebrock/eloquent-sluggable : using for slug URL (https://github.com/cviebrock/eloquent-sluggable)
  - laravelcollective/html : using for HTML && Form (https://laravelcollective.com/docs/5.2/html)
 
-##Javascript Packages :
-###ckeditor and kcfinder
+### Javascript Packages :
+  ckeditor and kcfinder
   Using for editor and upload image in editor to `public/upload`
 
 
-#install
+### install
   ```
      git clone git@github.com:thienkimlove/laravel-markdown.git && cd laravel-markdown && sh setup.sh
   ```
   
-## Go to /admin to start  
-# Usually Case.
+Go to /admin to start  
+## Usually Case.
 
-## Validation Form
+### Validation Form
 - First we create `app/Http/PostRequest` by using artisan command `php artisan make:request PostRequest` and change as below :
 
 ```php
@@ -65,7 +67,7 @@ public function store(PostRequest $request)
   ...
 }
 ```
-## Sharing Data With All Views
+### Sharing Data With All Views
 You may need to share a piece of data with all views that are rendered by your application.
 
 ```php
@@ -98,7 +100,7 @@ class AppServiceProvider extends ServiceProvider
     }
 }
 ```
-## ViewComposer
+### ViewComposer
 If you have data that you want to be bound to a view each time that view is rendered, a view composer can help you organize that logic into a single location.
 [https://laravel.com/docs/5.2/views#view-composers] : https://laravel.com/docs/5.2/views#view-composers
 
@@ -142,7 +144,7 @@ class ComposerServiceProvider extends ServiceProvider
 ```
 Go to ```example/composer``` for testing example.
 
-## Upload And Browser Images.
+### Upload And Browser Images.
 We are using ```intervention/image``` and ```intervention/imagecache``` for working with images.
 
 - First we add Html block below to ```resources/views/admin/posts/form.blade.php``` :
@@ -251,7 +253,7 @@ if (file_exists(public_path('files/' . $post->image))) {
 $post->delete();
 ```
 
-## Implement Slug URL
+### Implement Slug URL
 We will using `cviebrock/eloquent-sluggable` package to make `slug` field auto update when `store` or `update` content.
 
 For example, in table `posts`, we add a field `slug` in migration like below :
@@ -292,7 +294,7 @@ class Post extends Model implements SluggableInterface
 ```
 Now the `slug` field will be slug-url of `title` field every post update or create.
 
-## Implement Post Tags
+### Implement Post Tags
 -  Create Migration `php artisan make:migration create_tags_table`
 - Edit the migration file as below :
 
@@ -515,7 +517,7 @@ class Tag extends Model implements  SluggableInterface {
 @endsection
 ```
 
-## Implement Categories
+### Implement Categories
 First we create category migration in `database/migrations` :
 
 ```php
@@ -668,7 +670,7 @@ class CategoryRequest extends Request
 }
 ```
 
-## Implement Pagination
+### Implement Pagination
 - Link https://laravel.com/docs/5.2/pagination
 - Using code below in `app/Http/routes.php` :
 
@@ -695,7 +697,7 @@ Route::get('example/paginator', function(){
 @endsection
 ```
 
-## Implement Settings
+### Implement Settings
 
 ```php
 php artisan make:migration create_table_settings --create=settings
@@ -736,7 +738,7 @@ Browser `<host>/example/paginator` && `<host>/example/composer` to see.
 
 * Please note that when enter setting value is HTML code in form, click `Source` button in CKEditor to enter value, otherwise it will be encrypted.
 
-## Implement allow one user can login to admin.
+### Implement allow one user can login to admin.
 
 To implement that we create a new middleware `php artisan make:middleware AdminAuthenticate`
 
