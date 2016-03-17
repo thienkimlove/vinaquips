@@ -15,8 +15,16 @@ Route::get('/', function () {
 
     $page = 'index';
 
-    $hotProducts = \App\Post::image()->latest()->limit(12)->get();
-    $newProducts = \App\Post::image()->latest()->limit(3)->get();
+    $hotProducts = \App\Post::image()
+        ->where('type', 'products')
+        ->latest()
+        ->limit(12)
+        ->get();
+    $newProducts = \App\Post::image()
+        ->where('type', 'products')
+        ->latest()
+        ->limit(3)
+        ->get();
 
     return view('frontend.index', compact('hotProducts', 'newProducts', 'page'))->with([
         'meta_title' => 'Vinaquips | Trang chủ',
