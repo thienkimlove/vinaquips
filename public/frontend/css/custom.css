@@ -11,6 +11,23 @@ body.full-height, body.full-height .page-wrapper {
   min-height: 100%;
 }
 
+h1 {
+  font-size: 22px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.lead {
+  font-size: 16px;
+}
+
+.margin-top-clear {
+  margin-top: 10px !important;
+}
+
 .page-wrapper {
   background: none;
 }
