@@ -45,6 +45,10 @@ h2 {
   padding: 20px 0;
 }
 
+.object-non-visible {
+  opacity: 1;
+}
+
 a {
   color: #e84c3d;
 }
